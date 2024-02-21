@@ -1,12 +1,13 @@
 {
   "name": "nest-clean-architecture",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Project created to study DDD, Clean Architecture with NestJS Framework",
   "private": true,
   "license": "UNLICENSED",
-  "engines": {
-    "node": "20"
+  "author": {
+    "name": "Gabriel",
+    "email": "gabrielrportugal@outlook.com",
+    "url": "https://gabrielrportugal.vercel.app/"
   },
   "scripts": {
     "build": "nest build",

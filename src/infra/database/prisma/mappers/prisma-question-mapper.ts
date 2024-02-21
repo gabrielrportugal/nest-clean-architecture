@@ -1,7 +1,7 @@
+import { Question as PrismaQuestion, Prisma } from '@prisma/client'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Question } from '@/domain/forum/enterprise/entities/question'
 import { Slug } from '@/domain/forum/enterprise/entities/value-objects/slug'
-import { Question as PrismaQuestion } from '@prisma/client'
 
 export class PrismaQuestionMapper {
   public static toDomain(raw: PrismaQuestion): Question {
@@ -28,5 +28,31 @@ export class PrismaQuestionMapper {
       },
       new UniqueEntityId(id),
     )
+  }
+
+  public static toPrisma(
+    question: Question,
+  ): Prisma.QuestionUncheckedCreateInput {
+    const {
+      id,
+      slug,
+      title,
+      authorId,
+      content,
+      bestAnswerId,
+      createdAt,
+      updatedAt,
+    } = question
+
+    return {
+      id: id.toString(),
+      authorId: authorId.toString(),
+      bestAnswerId: bestAnswerId?.toString(),
+      title,
+      content,
+      slug: slug.value,
+      createdAt,
+      updatedAt,
+    }
   }
 }
