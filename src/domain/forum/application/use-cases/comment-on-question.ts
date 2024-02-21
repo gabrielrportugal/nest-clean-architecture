@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions-repository'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { QuestionComment } from '../../enterprise/entities/question-comment'
@@ -17,7 +18,7 @@ type CommentOnQuestionUseCaseResponse = Either<
     questionComment: QuestionComment
   }
 >
-
+@Injectable()
 export class CommentOnQuestionUseCase {
   constructor(
     private questionsRepository: QuestionsRepository,

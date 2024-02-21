@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions-repository'
 import { Question } from '../../enterprise/entities/question'
 import { Either, left, right } from '@/core/either'
@@ -22,7 +23,7 @@ type EditQuestionUseCaseResponse = Either<
     question: Question
   }
 >
-
+@Injectable()
 export class EditQuestionUseCase {
   constructor(
     private questionsRepository: QuestionsRepository,

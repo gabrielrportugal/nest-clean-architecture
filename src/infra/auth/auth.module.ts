@@ -15,6 +15,7 @@ import { JwtStrategy } from './jwt.strategy'
         const privateKeyBase64 = configService.get('JWT_PRIVATE_KEY', {
           infer: true,
         })
+
         const publicKeyBase64 = configService.get('JWT_PUBLIC_KEY', {
           infer: true,
         })
