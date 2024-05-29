@@ -1,11 +1,11 @@
 {
   "name": "nest-clean-architecture",
   "version": "0.0.1",
-  "description": "Project created to study DDD, Clean Architecture with NestJS Framework",
+  "description": "Project created to study DDD, Clean Architecture with Typescript using NestJS Framework",
   "private": true,
   "license": "UNLICENSED",
   "author": {
-    "name": "Gabriel",
+    "name": "Gabriel Portugal",
     "email": "gabrielrportugal@outlook.com",
     "url": "https://gabrielrportugal.vercel.app/"
   },
@@ -15,7 +15,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/src/infra/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "vitest run",
     "test:watch": "vitest",
