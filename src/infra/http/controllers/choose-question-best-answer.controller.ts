@@ -1,11 +1,9 @@
 import {
   BadRequestException,
-  Body,
   Controller,
   HttpCode,
   Param,
   Patch,
-  Put,
 } from '@nestjs/common'
 import { CurrentUser } from '@/infra/auth/current-user.decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
