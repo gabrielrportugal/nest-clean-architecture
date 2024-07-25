@@ -22,7 +22,7 @@ type UploadAndCreateAttachmentUseCaseResponse = Either<
 export class UploadAndCreateAttachmentUseCase {
   constructor(
     private attachmentRepository: AttachmentsRepository,
-    private uploader: Uploader
+    private uploader: Uploader,
   ) {}
 
   async execute({
@@ -37,12 +37,12 @@ export class UploadAndCreateAttachmentUseCase {
     const { url } = await this.uploader.upload({
       fileName,
       body,
-      fileType
+      fileType,
     })
 
     const attachment = Attachment.create({
       title: fileName,
-      url: url
+      url,
     })
 
     await this.attachmentRepository.create(attachment)
