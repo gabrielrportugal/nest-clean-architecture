@@ -68,7 +68,6 @@ describe('[Fetch Question Comments (E2E)]', () => {
       .send()
 
     expect(response.statusCode).toBe(200)
-
     expect(response.body).toMatchObject({
       comments: expect.arrayContaining([
         expect.objectContaining({

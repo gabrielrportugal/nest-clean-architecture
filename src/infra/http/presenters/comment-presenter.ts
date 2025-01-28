@@ -1,6 +1,5 @@
 import { Comment } from '@/domain/forum/enterprise/entities/comment'
 
-// TODO: Improve CommentPresenter PRESENTER
 export class CommentPresenter {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static toHttp(comment: Comment<any>) {

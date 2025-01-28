@@ -4,33 +4,30 @@ import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-r
 import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
-import {
-  SendNotificationUseCase,
-  SendNotificationUseCaseRequest,
-  SendNotificationUseCaseResponse,
-} from '../use-cases/send-notification'
+import { SendNotificationUseCase } from '../use-cases/send-notification'
 import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
 import { makeQuestion } from 'test/factories/make-question'
 import { waitFor } from 'test/utils/wait-for'
 import { MockInstance } from 'vitest'
+import { InMemoryAttachmentsRepository } from 'test/repositories/in-memory-attachments-repository'
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository'
 
 describe('[OnAnswerCreated]', () => {
   let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
   let inMemoryAnswersRepository: InMemoryAnswersRepository
-
   let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
   let inMemoryQuestionsRepository: InMemoryQuestionsRepository
-
   let inMemoryNotificationsRepository: InMemoryNotificationsRepository
+  let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository
+  let inMemoryStudentsRepository: InMemoryStudentsRepository
 
   let sendNotificationUseCase: SendNotificationUseCase
 
-  let sendNotificationExecuteSpyOn: MockInstance<
-    [SendNotificationUseCaseRequest],
-    Promise<SendNotificationUseCaseResponse>
-  >
+  let sendNotificationExecuteSpyOn: MockInstance
 
   beforeEach(() => {
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
     inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
     sendNotificationUseCase = new SendNotificationUseCase(
       inMemoryNotificationsRepository,
@@ -38,8 +35,11 @@ describe('[OnAnswerCreated]', () => {
 
     inMemoryQuestionAttachmentsRepository =
       new InMemoryQuestionAttachmentsRepository()
+
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentsRepository,
+      inMemoryAttachmentsRepository,
+      inMemoryStudentsRepository,
     )
 
     inMemoryAnswerAttachmentsRepository =
