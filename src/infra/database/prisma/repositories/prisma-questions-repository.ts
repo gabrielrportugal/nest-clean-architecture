@@ -8,12 +8,14 @@ import { QuestionAttachmentsRepository } from '@/domain/forum/application/reposi
 import { QuestionDetails } from '@/domain/forum/enterprise/entities/value-objects/question-details'
 import { PrismaQuestionDetailsMapper } from '../mappers/prisma-question-details-mapper'
 import { DomainEvents } from '@/core/events/domain-events'
+import { CacheRepository } from '@/infra/cache/cache-repository'
 
 @Injectable()
 export class PrismaQuestionsRepository implements QuestionsRepository {
   constructor(
     private prisma: PrismaService,
     private questionAttachmentsRepository: QuestionAttachmentsRepository,
+    private cacheRepository: CacheRepository,
   ) {}
 
   async findById(id: string): Promise<Question | null> {
@@ -37,6 +39,14 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
   }
 
   async findDetailsBySlug(slug: string): Promise<QuestionDetails | null> {
+    const cacheKey = `question:${slug}:details`
+
+    const cacheHit = await this.cacheRepository.get(cacheKey)
+
+    if (cacheHit) {
+      return PrismaQuestionDetailsMapper.toDomain(JSON.parse(cacheHit))
+    }
+
     const question = await this.prisma.question.findUnique({
       where: { slug },
       include: {
@@ -47,7 +57,11 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
 
     if (!question) return null
 
-    return PrismaQuestionDetailsMapper.toDomain(question)
+    await this.cacheRepository.set(cacheKey, JSON.stringify(question))
+
+    const questionDetails = PrismaQuestionDetailsMapper.toDomain(question)
+
+    return questionDetails
   }
 
   async findManyRecent({ page }: PaginationParams): Promise<Question[]> {
@@ -85,12 +99,15 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
       this.questionAttachmentsRepository.deleteMany(
         question.attachments.getRemovedItems(),
       ),
+      this.cacheRepository.delete(`question:${question.slug.value}:details`),
     ])
 
     DomainEvents.dispatchEventsForAggregate(question.id)
   }
 
   async delete(question: Question): Promise<void> {
-    await this.prisma.question.delete({ where: { id: question.id.toString() } })
+    await this.prisma.question.delete({
+      where: { id: question.id.toString() },
+    })
   }
 }
