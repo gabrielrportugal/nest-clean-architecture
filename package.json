@@ -22,7 +22,8 @@
     "test:cov": "vitest run --coverage",
     "test:debug": "vitest --inspect-brk --inspect --logHeapUsage --threads=false",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
-    "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts"
+    "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts",
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.617.0",

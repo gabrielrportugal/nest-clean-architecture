@@ -27,7 +27,6 @@ import { ChooseQuestionBestAnswerController } from './controllers/choose-questio
 import { ChooseQuestionBestAnswerUseCase } from '@/domain/forum/application/use-cases/choose-question-best-answer'
 import { CommentOnQuestionController } from './controllers/comment-on-question.controller'
 import { CommentOnQuestionUseCase } from '@/domain/forum/application/use-cases/comment-on-question'
-import { DeleteQuestionCommentController } from './controllers/delete-question-comment'
 import { DeleteQuestionCommentUseCase } from '@/domain/forum/application/use-cases/delete-question-comment'
 import { CommentOnAnswerController } from './controllers/comment-on-answer.controller'
 import { CommentOnAnswerUseCase } from '@/domain/forum/application/use-cases/comment-on-answer'
@@ -40,6 +39,9 @@ import { FetchAnswerCommentsUseCase } from '@/domain/forum/application/use-cases
 import { UploadAttachmentController } from './controllers/upload-attachment.controller'
 import { StorageModule } from '../storage/storage.module'
 import { UploadAndCreateAttachmentUseCase } from '@/domain/forum/application/use-cases/upload-and-create-attachment'
+import { DeleteQuestionCommentController } from './controllers/delete-question-comment.controller'
+import { ReadNotificationsController } from './controllers/read-notification.controller'
+import { ReadNotificationUseCase } from '@/domain/notification/application/use-cases/read-notification'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -63,6 +65,7 @@ import { UploadAndCreateAttachmentUseCase } from '@/domain/forum/application/use
     FetchQuestionCommentsController,
     FetchAnswerCommentsController,
     UploadAttachmentController,
+    ReadNotificationsController,
   ],
   providers: [
     CreateQuestionUseCase,
@@ -84,6 +87,7 @@ import { UploadAndCreateAttachmentUseCase } from '@/domain/forum/application/use
     FetchQuestionCommentsUseCase,
     FetchAnswerCommentsUseCase,
     UploadAndCreateAttachmentUseCase,
+    ReadNotificationUseCase,
   ],
 })
 export class HttpModule {}
